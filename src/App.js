@@ -3,6 +3,7 @@ import "./App.css";
 import Employees from "./components/Employees/Employees";
 import EmployeeItem from "./components/Employees/EmployeeItem";
 import Navbar from "./components/Navbar/Navbar";
+import axios from "axios";
 
 const App = () => {
   const [employees, setEmployees] = useState([
@@ -30,12 +31,14 @@ const App = () => {
   ]);
 
   const [sort, setSort] = useState(null);
-
-  const anotherArray = [1, 2, 3];
-
   // state = {
 
+  const populateEmployees = () => {
+    return axios.get("https://randomuser.me/api/?results=20");
+  };
+
   useEffect(() => {
+    populateEmployees();
     setSort(false);
     setSort(true);
   }, [employees]);
@@ -73,6 +76,7 @@ const App = () => {
       <button onClick={() => handleClick("name")}> name</button>
       <button onClick={() => handleClick("phone")}>phone</button>
       <button onClick={() => handleClick("email")}>email</button>
+
       {employees &&
         employees.map((employee) => (
           <div>
