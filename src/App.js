@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import Employees from "./components/Employees";
+import Employees from "./components/Employees/Employees";
+import Navbar from "./components/Navbar/Navbar";
 
 class App extends Component {
   state = {
@@ -14,8 +15,8 @@ class App extends Component {
       },
       {
         id: 2,
-        name: "George Foreman",
-        email: "george.foreman@test.com",
+        name: "George Frank",
+        email: "george.frank@test.com",
         phone: "565-453-8845",
         birthday: "8.12.1965",
       },
@@ -28,12 +29,35 @@ class App extends Component {
       },
     ],
   };
+
+  componentDidMount() {
+    fetch("https://randomuser.me/api/?results=50")
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        this.setState({ employees: this.state.employees, result });
+      });
+  }
+
+  handleClick = (key_to_sort) => {
+    console.log("Clicked");
+    this.setState({
+      employees: this.state.employees.sort((a, b) =>
+        a[key_to_sort].localeCompare(b[key_to_sort])
+      ),
+    });
+  };
+
   render() {
     console.log(this.state.employees);
     return (
       <div className="App">
-        <h1>this is a test!</h1>
-        <Employees employees={this.state.employees} />
+        <Navbar />
+        <Employees
+          _handleClick={this.handleClick}
+          employees={this.state.employees}
+        />
       </div>
     );
   }
