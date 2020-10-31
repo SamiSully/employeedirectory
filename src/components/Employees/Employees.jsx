@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 
 class Employees extends Component {
   render() {
-      console.log(this.props.employees)
-    return this.props.employees.map((employee)=> (
+
+      // <button onClick={() => this.props._handleClick("name")}> Name </button>;
+    return (this.props.employees.map((employee)=> ( <div>
     <EmployeeItem key={employee.id} employee={employee} _handleClick={this.props._handleClick}/>
-    ));
+    </div>))
+    )
   }
 }
 
